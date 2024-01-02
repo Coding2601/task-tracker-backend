@@ -7,17 +7,20 @@ import { AuthenticateService } from './authenticate.service';
 export class AuthenticateController {
   constructor(private readonly authenticateService: AuthenticateService) {}
 
+  //Middleware to handle sign up
   @Post('register')
   create(@Body() createAuthenticateDto: any) {
     return this.authenticateService.signUp(createAuthenticateDto);
   }
 
+  //Midleware to hanle sign n
   @Post('login')
   async findAll(@Body() dto: any) {
     const email = dto.email;
     return this.authenticateService.signIn(dto, email);
   }
 
+  //Middleware to add new task to list of existing tasks
   @Post('addTask')
   async addTask(@Body() content: any) {
     const email = content.email;
@@ -25,11 +28,13 @@ export class AuthenticateController {
     return await this.authenticateService.update(content, email);
   }
 
+  //Middleware to retreive tasks from MongoDB collection
   @Post('getAllTasks')
   async getAllTasks(@Body() content: any) {
     return await this.authenticateService.findAll(content.email);
   }
 
+  //By default, 'GET' middleware made
   @Get()
   helloWorld() {
     return 'Hello World';
