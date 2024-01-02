@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Get } from '@nestjs/common';
 import { AuthenticateService } from './authenticate.service';
 //import { CreateAuthenticateDto } from './dto/create-authenticate.dto';
 //import { UpdateAuthenticateDto } from './dto/update-authenticate.dto';
@@ -28,6 +28,11 @@ export class AuthenticateController {
   @Post('getAllTasks')
   async getAllTasks(@Body() content: any) {
     return await this.authenticateService.findAll(content.email);
+  }
+
+  @Get()
+  helloWorld() {
+    return 'Hello World';
   }
 
   /*@Patch(':id')
