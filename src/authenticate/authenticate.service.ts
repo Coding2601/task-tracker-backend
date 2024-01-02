@@ -14,6 +14,8 @@ export class AuthenticateService {
     @InjectModel('auth') private authModel: Model<Authenticate>,
     private jwtService: JwtService,
   ) {}
+  
+  //Function for sign up middleware
   async signUp(createAuthenticateDto: CreateAuthenticateDto) {
     const hashPass = await argon.hash(createAuthenticateDto.password);
     createAuthenticateDto.password = hashPass;
@@ -23,6 +25,7 @@ export class AuthenticateService {
     return { token: token, status: 'ok' };
   }
 
+  //Function for sign in middleware
   async signIn(dto: CreateAuthenticateDto, email: string) {
     const x = await this.authModel.findOne({ email });
     if (!x) {
@@ -36,6 +39,7 @@ export class AuthenticateService {
     return { token: token, status: 'ok' };
   }
 
+  //Function for retrevie all tasks from MongoDB collection
   async findAll(email: string) {
     console.log(email);
     const user = await this.authModel.findOne({ email });
@@ -45,6 +49,7 @@ export class AuthenticateService {
     return user.tasks;
   }
 
+  //Function to add a new Task to MongoDB collection
   async update(task: JSON, email: string) {
     const user = await this.authModel.updateOne(
       { email },
